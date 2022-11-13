@@ -83,8 +83,8 @@ void training_gshare(uint32_t pc, uint8_t outcome){
   uint32_t gshare_bht_index = (global_history ^ pc) & (gshare_bht_size - 1);
   prediction_helper(gshare_bht, gshare_bht_index, outcome);
   //Updating the global register
-  ghistory = (ghistory << 1);
-  ghistory = (ghistory  | outcome);
+  global_history = (global_history << 1);
+  global_history = (global_history  | outcome);
 }
 
 //------------------------------------//
