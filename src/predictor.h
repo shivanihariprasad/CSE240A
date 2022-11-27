@@ -11,13 +11,18 @@
 
 #include <stdint.h>
 #include <stdlib.h>
+#include <string.h>
 
 //
 // Student Information
 //
-extern const char *studentName;
-extern const char *studentID;
-extern const char *email;
+extern const char *studentName1;
+extern const char *studentID1;
+extern const char *email1;
+
+extern const char *studentName2;
+extern const char *studentID2;
+extern const char *email2;
 
 //------------------------------------//
 //      Global Predictor Defines      //
