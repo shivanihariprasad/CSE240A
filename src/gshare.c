@@ -4,13 +4,7 @@
 uint8_t *gshare_bht;
 uint64_t global_history; //history
 
-int ghistoryBits; // Number of bits used for Global History
-int bpType;       // Branch Prediction Type
 
-// remove below
-int lhistoryBits; // Number of bits used for Local History
-int pcIndexBits;  // Number of bits used for PC index
-int verbose;
 
 //Helper Functions
 void prediction_helper(uint8_t *bht, uint32_t index, uint8_t outcome){
@@ -58,5 +52,6 @@ void training_gshare(uint32_t pc, uint8_t outcome){
   prediction_helper(gshare_bht, gshare_bht_index, outcome);
   //Updating the global register
   global_history = (global_history << 1);
+  global_history &= ((1 << ghistoryBits) - 1);
   global_history = (global_history  | outcome);
 }

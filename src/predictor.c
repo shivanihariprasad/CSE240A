@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include "predictor.h"
 #include "gshare.c"
+#include "tournament.c"
 
 const char *studentName1 = "Shivani Hariprasad";
 const char *studentID1   = "A59019698";
@@ -31,6 +32,12 @@ const char *bpName[4] = { "Static", "Gshare",
 
 // Initialize the predictor
 //
+int ghistoryBits; // Number of bits used for Global BHT
+int bpType;       // Branch Prediction Type
+int lhistoryBits; //Number of bits used for local BHT
+int pcIndexBits; // Number of bit used for local PHT
+//remove
+int verbose;
 void
 init_predictor()
 {
@@ -38,7 +45,7 @@ init_predictor()
   switch (bpType) {
     case STATIC: break;
     case GSHARE: init_gshare(); break;
-    case TOURNAMENT: break;
+    case TOURNAMENT: init_tournament(); break;
     case CUSTOM: break;
     default:
       break;
@@ -59,7 +66,7 @@ make_prediction(uint32_t pc)
     case GSHARE: 
       return fetch_gshare_prediction(pc); break;
     case TOURNAMENT: 
-      return TAKEN; break;
+      return fetch_tournament_prediction(pc); break;
     case CUSTOM: 
       return TAKEN; break;
     default:
@@ -81,7 +88,7 @@ train_predictor(uint32_t pc, uint8_t outcome)
   switch (bpType) {
     case STATIC: break;
     case GSHARE: training_gshare(pc, outcome); break;
-    case TOURNAMENT: break;
+    case TOURNAMENT: training_tournament(pc, outcome);break;
     case CUSTOM: break;
     default:
       break;

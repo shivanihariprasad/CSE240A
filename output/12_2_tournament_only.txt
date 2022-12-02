@@ -1,0 +1,29 @@
+root@ab9ef5b44750:/home/CSE240A/src# bunzip2 -kc /home/CSE240A/traces/fp_1.bz2 | ./predictor --tournament:10:11:11
+Branches:           1546797
+Incorrect:            15313
+Misprediction Rate:   0.990
+
+root@ab9ef5b44750:/home/CSE240A/src# bunzip2 -kc /home/CSE240A/traces/fp_2.bz2 | ./predictor --tournament:10:11:11
+Branches:           2422049
+Incorrect:            60119
+Misprediction Rate:   2.482
+
+root@ab9ef5b44750:/home/CSE240A/src# bunzip2 -kc /home/CSE240A/traces/int_1.bz2 | ./predictor --tournament:10:11:11
+Branches:           3771697
+Incorrect:           414836
+Misprediction Rate:  10.999
+
+root@ab9ef5b44750:/home/CSE240A/src# bunzip2 -kc /home/CSE240A/traces/int_2.bz2 | ./predictor --tournament:10:11:11
+Branches:           3755315
+Incorrect:            13954
+Misprediction Rate:   0.372
+
+root@ab9ef5b44750:/home/CSE240A/src# bunzip2 -kc /home/CSE240A/traces/mm_1.bz2  | ./predictor --tournament:10:11:11
+Branches:           3014850
+Incorrect:            51493
+Misprediction Rate:   1.708
+
+root@ab9ef5b44750:/home/CSE240A/src# bunzip2 -kc /home/CSE240A/traces/mm_2.bz2  | ./predictor --tournament:10:11:11
+Branches:           2563897
+Incorrect:           194345
+Misprediction Rate:   7.580
