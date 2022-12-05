@@ -14,14 +14,7 @@ int weight_bit_limit;
 int perceptron_theta;
 
 uint16_t get_power_of_2(int power){
-  uint16_t value = 1;
-  while (power != 0)
-  {
-      value *= 2;  
-      --power;
-  }
-  
-  return value;
+  return 1 << power;
 }
 
 //Init Function for perceptron
@@ -107,7 +100,7 @@ void training_perceptron(uint32_t pc, uint8_t outcome){
   int sum = get_perceptron_sum(perceptron_weights);
   uint8_t perceptron_prediction = sum >= 0 ? TAKEN : NOTTAKEN;
   
-  if((perceptron_prediction != outcome) && (abs(sum) <= perceptron_theta)){
+  if((perceptron_prediction != outcome) || (abs(sum) <= perceptron_theta)){
     // update bias term
     perceptron_table[perceptron_table_idx * num_weights + 0] += (outcome == TAKEN) ? 1 : -1;
     
