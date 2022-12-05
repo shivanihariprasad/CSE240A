@@ -25,9 +25,9 @@ void init_perceptron(){
   num_weights = get_power_of_2(num_weights_bits);
   perceptron_table_length = get_power_of_2(perceptron_table_length_bits);
     
-  perceptron_table = (int**) malloc(perceptron_table_length * num_weights * sizeof(int*)); // stores weights
+  perceptron_table = (int**) malloc(perceptron_table_length * sizeof(int*)); // stores weights
   for(int i=0; i<perceptron_table_length; i++)
-				perceptron_table[i] = (int*) calloc(perceptron_table_length, sizeof(int));
+				perceptron_table[i] = (int*) calloc(num_weights, sizeof(int));
   perceptron_global_history = 0;
     
   //printf("weight_bit_limit=%d, weight_limit_lower=%d, weight_limit_upper=%d, num_weights=%d, perceptron_table_length=%d, perceptron_theta=%d\n", weight_bit_limit, weight_limit_lower, weight_limit_upper, num_weights, perceptron_table_length, perceptron_theta);
