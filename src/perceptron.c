@@ -14,14 +14,7 @@ int weight_bit_limit;
 int perceptron_theta;
 
 uint16_t get_power_of_2(int power){
-  uint16_t value = 1;
-  while (power != 0)
-  {
-      value *= 2;  
-      --power;
-  }
-  
-  return value;
+  return 1 << power;
 }
 
 //Init Function for perceptron
