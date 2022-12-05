@@ -52,6 +52,11 @@ extern int pcIndexBits;  // Number of bits used for PC index
 extern int bpType;       // Branch Prediction Type
 extern int verbose;
 
+extern int perceptron_table_length_bits; 
+extern int num_weights_bits; 
+extern int weight_bit_limit;
+extern int perceptron_theta;
+
 //------------------------------------//
 //    Predictor Function Prototypes   //
 //------------------------------------//

@@ -7,6 +7,9 @@ uint8_t *tournament_local_bht;
 uint16_t *tournament_local_predictor;
 uint8_t *tournament_metapredictor;
 
+int ghistoryBits; // Number of bits used for Global BHT
+int lhistoryBits; //Number of bits used for local BHT
+int pcIndexBits; // Number of bit used for local PHT
 
 uint8_t localOutcome, globalOutcome;
 // //Helper Functions

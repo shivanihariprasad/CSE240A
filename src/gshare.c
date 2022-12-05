@@ -4,7 +4,7 @@
 uint8_t *gshare_bht;
 uint64_t global_history; //history
 
-
+int ghistoryBits; // Number of bits used for Global BHT
 
 //Helper Functions
 void prediction_helper(uint8_t *bht, uint32_t index, uint8_t outcome){
