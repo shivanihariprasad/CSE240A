@@ -26,6 +26,7 @@ uint16_t get_power_of_2(int power){
 
 //Init Function for perceptron
 void init_perceptron(){
+
   weight_limit_lower = -1 * get_power_of_2(weight_bit_limit);
   weight_limit_upper = get_power_of_2(weight_bit_limit) - 1;
   num_weights = get_power_of_2(num_weights_bits);
@@ -36,7 +37,7 @@ void init_perceptron(){
   
   perceptron_global_history = 0;
     
-  printf("weight_bit_limit=%d, weight_limit_lower=%d, weight_limit_upper=%d, num_weights=%d, perceptron_table_length=%d, perceptron_theta=%d\n", weight_bit_limit, weight_limit_lower, weight_limit_upper, num_weights, perceptron_table_length, perceptron_theta);
+  //printf("weight_bit_limit=%d, weight_limit_lower=%d, weight_limit_upper=%d, num_weights=%d, perceptron_table_length=%d, perceptron_theta=%d\n", weight_bit_limit, weight_limit_lower, weight_limit_upper, num_weights, perceptron_table_length, perceptron_theta);
 }
 
 // get index into the table of perceptrons
@@ -62,7 +63,7 @@ int get_perceptron_sum(int8_t* perceptron_weights){
   // adding the bias term first
   sum += perceptron_weights[0];
   for(uint8_t weight_idx = 1; weight_idx < num_weights; weight_idx++){
-    if ((perceptron_global_history << weight_idx) & 1){
+    if ((perceptron_global_history >> weight_idx) & 1){
       sum += perceptron_weights[weight_idx];
     } else {
       sum -= perceptron_weights[weight_idx];
@@ -80,24 +81,6 @@ uint8_t fetch_perceptron_prediction(uint32_t pc){
     return get_perceptron_sum(perceptron_weights) >= 0 ? TAKEN : NOTTAKEN;
 }
 
-void debug(uint8_t perceptron_table_idx, uint8_t perceptron_prediction, uint8_t outcome, int8_t* perceptron_weights_old, int sum){
-  int8_t* perceptron_weights_new = get_perceptron_weights(perceptron_table_idx);
-  
-  if(perceptron_prediction != outcome){
-    printf("\nNew:\n");
-    for(int i=0;i<num_weights;i++){
-      printf("%d ", perceptron_weights_old[i]);
-    }
-    printf("\n");
-    printf("Old:\n");
-    for(int i=0;i<num_weights;i++){
-      printf("%d ", perceptron_weights_new[i]);
-    }
-    printf("\nSum=%d\n", sum);
-  }
-  
-  return;
-}
 
 // update weights of perceptron
 void training_perceptron(uint32_t pc, uint8_t outcome){
@@ -107,13 +90,17 @@ void training_perceptron(uint32_t pc, uint8_t outcome){
   int sum = get_perceptron_sum(perceptron_weights);
   uint8_t perceptron_prediction = sum >= 0 ? TAKEN : NOTTAKEN;
   
-  if((perceptron_prediction != outcome) && (abs(sum) <= perceptron_theta)){
+  if((perceptron_prediction != outcome) || (abs(sum) <= perceptron_theta)){
     // update bias term
     perceptron_table[perceptron_table_idx * num_weights + 0] += (outcome == TAKEN) ? 1 : -1;
-    
+    if(perceptron_table[perceptron_table_idx * num_weights + 0] > weight_limit_upper){
+        perceptron_table[perceptron_table_idx * num_weights + 0] = weight_limit_upper;
+      } else if (perceptron_table[perceptron_table_idx * num_weights + 0] < weight_limit_lower){
+        perceptron_table[perceptron_table_idx * num_weights + 0] = weight_limit_lower;
+      } 
     // update other perceptron weights
     for(uint8_t weight_idx = 1; weight_idx < num_weights; weight_idx++){
-      if(((perceptron_global_history << weight_idx) & 1) == outcome){
+      if(((perceptron_global_history >> weight_idx) & 1) == outcome){
         // when x_i and t are same then x_i * t = 1 -> so add 1
         perceptron_table[perceptron_table_idx * num_weights + weight_idx] += 1;
       } else {
@@ -130,12 +117,10 @@ void training_perceptron(uint32_t pc, uint8_t outcome){
     }
   }
   
-  if(perceptron_table_idx == 47){
-    debug(perceptron_table_idx, perceptron_prediction, outcome, perceptron_weights, sum);
-  }
+
   
   //Updating the global register
-  perceptron_global_history = (perceptron_global_history << 1 | outcome) & ((1 << num_weights) - 1);
+  perceptron_global_history = (perceptron_global_history << 1 | outcome) & ((1 << (num_weights-1)) - 1);
   
   return;
 }

@@ -1,0 +1,29 @@
+root@a752cd8d1bda:/home/CSE240A/src# bunzip2 -kc /home/CSE240A/traces/fp_1.bz2 | ./predictor --custom:7:5:8:32
+Branches:           1546797
+Incorrect:            12715
+Misprediction Rate:   0.822
+
+root@a752cd8d1bda:/home/CSE240A/src# bunzip2 -kc /home/CSE240A/traces/fp_2.bz2 | ./predictor --custom:7:5:8:32
+Branches:           2422049
+Incorrect:            23279
+Misprediction Rate:   0.961
+
+root@a752cd8d1bda:/home/CSE240A/src# bunzip2 -kc /home/CSE240A/traces/int_1.bz2 | ./predictor --custom:7:5:8:32
+Branches:           3771697
+Incorrect:           376895
+Misprediction Rate:   9.993
+
+root@a752cd8d1bda:/home/CSE240A/src# bunzip2 -kc /home/CSE240A/traces/int_2.bz2 | ./predictor --custom:7:5:8:32
+Branches:           3755315
+Incorrect:            11481
+Misprediction Rate:   0.306
+
+root@a752cd8d1bda:/home/CSE240A/src# bunzip2 -kc /home/CSE240A/traces/mm_1.bz2 | ./predictor --custom:7:5:8:32
+Branches:           3014850
+Incorrect:            91812
+Misprediction Rate:   3.045
+
+root@a752cd8d1bda:/home/CSE240A/src# bunzip2 -kc /home/CSE240A/traces/mm_2.bz2 | ./predictor --custom:7:5:8:32
+Branches:           2563897
+Incorrect:           187070
+Misprediction Rate:   7.296

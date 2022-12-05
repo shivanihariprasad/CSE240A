@@ -12,22 +12,6 @@ int lhistoryBits; //Number of bits used for local BHT
 int pcIndexBits; // Number of bit used for local PHT
 
 uint8_t localOutcome, globalOutcome;
-// //Helper Functions
-// void prediction_helper(uint8_t *bht, uint32_t index, uint8_t outcome){
-//     uint8_t prediction = bht[index];
-//     if(prediction == WN){
-//     bht[index] = (outcome == NOTTAKEN) ? SN : WT;
-//     }
-//     else if (prediction == SN){
-//     bht[index] = (outcome == NOTTAKEN) ? SN : WN;
-//     }
-//     else if (prediction == WT){
-//     bht[index] = (outcome == NOTTAKEN) ? WN : ST;
-//     }
-//     else if (prediction == ST){
-//     bht[index] = (outcome == NOTTAKEN) ? WT : ST;
-//     }
-// }
 
 //Init Function for tournament
 void init_tournament(){
@@ -38,7 +22,7 @@ void init_tournament(){
 
     int local_predictor_size = 1 << pcIndexBits;
     tournament_local_predictor =  malloc(local_predictor_size * sizeof(uint32_t));
-    memset(tournament_local_predictor, 0, (gshare_bht_size * sizeof(uint32_t)));
+    memset(tournament_local_predictor, 0, (local_predictor_size * sizeof(uint32_t)));
 
     int local_bht_size = 1 << lhistoryBits;
     tournament_local_bht = malloc(local_bht_size * sizeof(uint8_t));
